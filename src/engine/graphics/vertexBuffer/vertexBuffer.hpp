@@ -1,7 +1,9 @@
 #pragma once
+#include "engine/graphics/vertex/vertex.hpp"
 #include "glad/gl.h"
 #include <cstddef>
 #include <iostream>
+#include <vector>
 
 class VertexBuffer {
 private:
@@ -9,7 +11,8 @@ private:
 
 public:
   VertexBuffer();
-  VertexBuffer(const void *data, size_t size);
+  VertexBuffer(std::vector<float> &data);
+  ~VertexBuffer() { glDeleteBuffers(1, &ID); };
   VertexBuffer(const VertexBuffer &) = delete;
   VertexBuffer &operator=(const VertexBuffer &) = delete;
 
@@ -18,14 +21,6 @@ public:
   unsigned int getID() { return ID; }
   void bind() const { glBindBuffer(GL_ARRAY_BUFFER, ID); }
   void unbind() const { glBindBuffer(GL_ARRAY_BUFFER, 0); }
-  void changeData(const void *data, size_t size, GLenum mode);
-};
-
-struct VertexAttrib {
-  unsigned int index;
-  int size;
-  GLenum type;
-  bool normalized;
-  int stride;
-  const void *offset;
+  void upload(std::vector<Vertex> &data, GLenum mode);
+  void upload(std::vector<float> &data, GLenum mode);
 };

@@ -4,9 +4,9 @@
 class Texture {
 private:
   unsigned int ID;
-  std::string texturePath;
 
 public:
+  std::string texturePath;
   Texture(std::string TexturePath);
   Texture(const Texture &) = delete;
   Texture &operator=(const Texture &) = delete;

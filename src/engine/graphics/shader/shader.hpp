@@ -1,4 +1,5 @@
 #pragma once
+#include "engine/meshManager/meshManager.hpp"
 #include "glad/gl.h"
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/glm.hpp>
@@ -6,20 +7,23 @@
 
 class Shader {
 private:
+  unsigned int vShader, fShader;
   unsigned int programID;
   void checkCompileErrors(unsigned int shaderID);
   void checkProgramErrors();
+  void compileShader(const std::string &path, unsigned int dest);
+  void makeAndLinkProgram();
+  void cleanShaders();
+  void makeAndCompileShaders(const std::string &vertexShaderPath,
+                             const std::string &fragmentShaderPath);
 
 public:
-  Shader(const std::string &vertexShaderPath,
-         const std::string &fragmentShaderPath);
+  Shader(VertexLayout layout);
+  Shader(const std::string &);
   Shader(const Shader &) = delete;
   Shader &operator=(const Shader &) = delete;
   Shader(Shader &&other) noexcept;
 
   void use() const { glUseProgram(programID); }
-  void setUniformVec4(const std::string &name, float r, float g, float b,
-                      float a);
-  void setUniformMat4(const std::string &name, glm::mat4 matrix);
   unsigned int getID() { return programID; }
 };

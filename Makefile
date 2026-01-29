@@ -1,6 +1,6 @@
 CXX := g++
 CXXFLAGS := -std=c++20 -Wall -Wextra -I./include -I./src -ggdb
-LDFLAGS := -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -I./include -I./src
+LDFLAGS := -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -ggdb -I./include -I./src
 
 SRC_DIR := src
 BUILD_DIR := build

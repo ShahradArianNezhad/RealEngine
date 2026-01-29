@@ -1,25 +1,33 @@
 #pragma once
-#include "engine/graphics/batch/batch.hpp"
-#include "platform/window/GLFWwindow.hpp"
-#include <vector>
+#define GLFW_INCLUDE_NONE
+#include "engine/graphics/batchManager/batchManager.hpp"
+#include "engine/graphics/elementBuffer/elementBuffer.hpp"
+#include "engine/graphics/shader/shader.hpp"
+#include "engine/graphics/vertexArray/vertexArray.hpp"
+#include "engine/graphics/vertexBuffer/vertexBuffer.hpp"
+#include "engine/graphics/vertexLayout/vertexLayout.hpp"
+#include "engine/meshManager/meshManager.hpp"
+#include "engine/scene/scene.hpp"
+#include <GLFW/glfw3.h>
+#include <glad/gl.h>
 
 class Renderer {
 private:
-  EngineWindow window{800, 600};
-  std::vector<Batch> batches;
-  std::vector<float> positions;
-
-  void initGLAD();
-  void draw(Batch &batch);
-  void render();
-  void clear();
+  BatchManager batchManager;
+  MeshManager &meshManager;
+  VertexArray vao;
+  VertexBuffer vbo;
+  ElementBuffer ebo;
+  Shader shader{VertexLayout::Pos};
 
 public:
-  Renderer();
+  Renderer(MeshManager &manager);
   Renderer(const Renderer &) = delete;
   Renderer &operator=(const Renderer &) = delete;
   Renderer(Renderer &&other) = delete;
+  static void initGLAD();
 
-  void addObject(Object object);
-  void mainloop();
+  void collectAndBatch(Scene &scene);
+  void renderBatches();
+  void flush();
 };

@@ -1,15 +1,20 @@
 #include "engine/graphics/vertexArray/vertexArray.hpp"
+#include "engine/graphics/vertexLayout/vertexLayout.hpp"
 #include <iostream>
 
 VertexArray::VertexArray() { glGenVertexArrays(1, &ID); }
 
 void VertexArray::useLayout(VertexLayout layout) {
-  auto layoutArray = layout.getLayoutArray();
-  for (int location = 0; location < layoutArray.size(); location++) {
-    glVertexAttribPointer(location, layoutArray[location], GL_FLOAT, false,
-                          layout.getStride(),
-                          (void *)layout.getOffsetForLocation(location));
-    glEnableVertexAttribArray(location);
+  if (layout == VertexLayout::Pos) {
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+  } else if (layout == VertexLayout::PosColor) {
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                          (void *)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                          (void *)(3 * sizeof(float)));
   }
 }
 

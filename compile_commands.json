@@ -8,6 +8,7 @@
       "-I./include",
       "-I./src",
       "-ggdb",
+      "-ggdb",
       "-I./include",
       "-I./src",
       "-c",
@@ -15,9 +16,9 @@
       "build/main.o",
       "src/main.cpp"
     ],
-    "directory": "/home/shahrad/Desktop/cpp",
-    "file": "/home/shahrad/Desktop/cpp/src/main.cpp",
-    "output": "/home/shahrad/Desktop/cpp/build/main.o"
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/main.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/main.o"
   },
   {
     "arguments": [
@@ -27,6 +28,7 @@
       "-Wextra",
       "-I./include",
       "-I./src",
+      "-ggdb",
       "-ggdb",
       "-I./include",
       "-I./src",
@@ -35,9 +37,9 @@
       "build/platform/input/inputHandler.o",
       "src/platform/input/inputHandler.cpp"
     ],
-    "directory": "/home/shahrad/Desktop/cpp",
-    "file": "/home/shahrad/Desktop/cpp/src/platform/input/inputHandler.cpp",
-    "output": "/home/shahrad/Desktop/cpp/build/platform/input/inputHandler.o"
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/platform/input/inputHandler.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/platform/input/inputHandler.o"
   },
   {
     "arguments": [
@@ -47,6 +49,7 @@
       "-Wextra",
       "-I./include",
       "-I./src",
+      "-ggdb",
       "-ggdb",
       "-I./include",
       "-I./src",
@@ -55,9 +58,9 @@
       "build/platform/window/GLFWwindow.o",
       "src/platform/window/GLFWwindow.cpp"
     ],
-    "directory": "/home/shahrad/Desktop/cpp",
-    "file": "/home/shahrad/Desktop/cpp/src/platform/window/GLFWwindow.cpp",
-    "output": "/home/shahrad/Desktop/cpp/build/platform/window/GLFWwindow.o"
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/platform/window/GLFWwindow.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/platform/window/GLFWwindow.o"
   },
   {
     "arguments": [
@@ -67,6 +70,28 @@
       "-Wextra",
       "-I./include",
       "-I./src",
+      "-ggdb",
+      "-ggdb",
+      "-I./include",
+      "-I./src",
+      "-c",
+      "-o",
+      "build/core/idManager/idManager.o",
+      "src/core/idManager/idManager.cpp"
+    ],
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/core/idManager/idManager.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/core/idManager/idManager.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++20",
+      "-Wall",
+      "-Wextra",
+      "-I./include",
+      "-I./src",
+      "-ggdb",
       "-ggdb",
       "-I./include",
       "-I./src",
@@ -75,9 +100,9 @@
       "build/core/file/fileIO.o",
       "src/core/file/fileIO.cpp"
     ],
-    "directory": "/home/shahrad/Desktop/cpp",
-    "file": "/home/shahrad/Desktop/cpp/src/core/file/fileIO.cpp",
-    "output": "/home/shahrad/Desktop/cpp/build/core/file/fileIO.o"
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/core/file/fileIO.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/core/file/fileIO.o"
   },
   {
     "arguments": [
@@ -87,6 +112,28 @@
       "-Wextra",
       "-I./include",
       "-I./src",
+      "-ggdb",
+      "-ggdb",
+      "-I./include",
+      "-I./src",
+      "-c",
+      "-o",
+      "build/engine/engine.o",
+      "src/engine/engine.cpp"
+    ],
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/engine/engine.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/engine/engine.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++20",
+      "-Wall",
+      "-Wextra",
+      "-I./include",
+      "-I./src",
+      "-ggdb",
       "-ggdb",
       "-I./include",
       "-I./src",
@@ -95,9 +142,9 @@
       "build/engine/graphics/shader/shader.o",
       "src/engine/graphics/shader/shader.cpp"
     ],
-    "directory": "/home/shahrad/Desktop/cpp",
-    "file": "/home/shahrad/Desktop/cpp/src/engine/graphics/shader/shader.cpp",
-    "output": "/home/shahrad/Desktop/cpp/build/engine/graphics/shader/shader.o"
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/engine/graphics/shader/shader.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/engine/graphics/shader/shader.o"
   },
   {
     "arguments": [
@@ -107,6 +154,28 @@
       "-Wextra",
       "-I./include",
       "-I./src",
+      "-ggdb",
+      "-ggdb",
+      "-I./include",
+      "-I./src",
+      "-c",
+      "-o",
+      "build/engine/graphics/vertex/vertex.o",
+      "src/engine/graphics/vertex/vertex.cpp"
+    ],
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/engine/graphics/vertex/vertex.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/engine/graphics/vertex/vertex.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++20",
+      "-Wall",
+      "-Wextra",
+      "-I./include",
+      "-I./src",
+      "-ggdb",
       "-ggdb",
       "-I./include",
       "-I./src",
@@ -115,9 +184,9 @@
       "build/engine/graphics/elementBuffer/elementBuffer.o",
       "src/engine/graphics/elementBuffer/elementBuffer.cpp"
     ],
-    "directory": "/home/shahrad/Desktop/cpp",
-    "file": "/home/shahrad/Desktop/cpp/src/engine/graphics/elementBuffer/elementBuffer.cpp",
-    "output": "/home/shahrad/Desktop/cpp/build/engine/graphics/elementBuffer/elementBuffer.o"
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/engine/graphics/elementBuffer/elementBuffer.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/engine/graphics/elementBuffer/elementBuffer.o"
   },
   {
     "arguments": [
@@ -127,6 +196,7 @@
       "-Wextra",
       "-I./include",
       "-I./src",
+      "-ggdb",
       "-ggdb",
       "-I./include",
       "-I./src",
@@ -135,9 +205,9 @@
       "build/engine/graphics/vertexBuffer/vertexBuffer.o",
       "src/engine/graphics/vertexBuffer/vertexBuffer.cpp"
     ],
-    "directory": "/home/shahrad/Desktop/cpp",
-    "file": "/home/shahrad/Desktop/cpp/src/engine/graphics/vertexBuffer/vertexBuffer.cpp",
-    "output": "/home/shahrad/Desktop/cpp/build/engine/graphics/vertexBuffer/vertexBuffer.o"
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/engine/graphics/vertexBuffer/vertexBuffer.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/engine/graphics/vertexBuffer/vertexBuffer.o"
   },
   {
     "arguments": [
@@ -147,6 +217,7 @@
       "-Wextra",
       "-I./include",
       "-I./src",
+      "-ggdb",
       "-ggdb",
       "-I./include",
       "-I./src",
@@ -155,9 +226,9 @@
       "build/engine/graphics/vertexArray/vertexArray.o",
       "src/engine/graphics/vertexArray/vertexArray.cpp"
     ],
-    "directory": "/home/shahrad/Desktop/cpp",
-    "file": "/home/shahrad/Desktop/cpp/src/engine/graphics/vertexArray/vertexArray.cpp",
-    "output": "/home/shahrad/Desktop/cpp/build/engine/graphics/vertexArray/vertexArray.o"
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/engine/graphics/vertexArray/vertexArray.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/engine/graphics/vertexArray/vertexArray.o"
   },
   {
     "arguments": [
@@ -168,16 +239,17 @@
       "-I./include",
       "-I./src",
       "-ggdb",
+      "-ggdb",
       "-I./include",
       "-I./src",
       "-c",
       "-o",
-      "build/engine/graphics/renderable/renderable.o",
-      "src/engine/graphics/renderable/renderable.cpp"
+      "build/engine/graphics/texture/texture.o",
+      "src/engine/graphics/texture/texture.cpp"
     ],
-    "directory": "/home/shahrad/Desktop/cpp",
-    "file": "/home/shahrad/Desktop/cpp/src/engine/graphics/renderable/renderable.cpp",
-    "output": "/home/shahrad/Desktop/cpp/build/engine/graphics/renderable/renderable.o"
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/engine/graphics/texture/texture.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/engine/graphics/texture/texture.o"
   },
   {
     "arguments": [
@@ -187,6 +259,7 @@
       "-Wextra",
       "-I./include",
       "-I./src",
+      "-ggdb",
       "-ggdb",
       "-I./include",
       "-I./src",
@@ -195,9 +268,9 @@
       "build/engine/graphics/renderer/renderer.o",
       "src/engine/graphics/renderer/renderer.cpp"
     ],
-    "directory": "/home/shahrad/Desktop/cpp",
-    "file": "/home/shahrad/Desktop/cpp/src/engine/graphics/renderer/renderer.cpp",
-    "output": "/home/shahrad/Desktop/cpp/build/engine/graphics/renderer/renderer.o"
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/engine/graphics/renderer/renderer.cpp",
+    "output": "/home/shahrad/Desktop/engine/build/engine/graphics/renderer/renderer.o"
   },
   {
     "arguments": [
@@ -206,21 +279,25 @@
       "build/main.o",
       "build/platform/input/inputHandler.o",
       "build/platform/window/GLFWwindow.o",
+      "build/core/idManager/idManager.o",
       "build/core/file/fileIO.o",
+      "build/engine/engine.o",
       "build/engine/graphics/shader/shader.o",
+      "build/engine/graphics/vertex/vertex.o",
       "build/engine/graphics/elementBuffer/elementBuffer.o",
       "build/engine/graphics/vertexBuffer/vertexBuffer.o",
       "build/engine/graphics/vertexArray/vertexArray.o",
-      "build/engine/graphics/renderable/renderable.o",
+      "build/engine/graphics/texture/texture.o",
       "build/engine/graphics/renderer/renderer.o",
+      "-ggdb",
       "-I./include",
       "-I./src",
       "-o",
       "build/executable",
       "src/glad/gl.c"
     ],
-    "directory": "/home/shahrad/Desktop/cpp",
-    "file": "/home/shahrad/Desktop/cpp/src/glad/gl.c",
-    "output": "/home/shahrad/Desktop/cpp/build/executable"
+    "directory": "/home/shahrad/Desktop/engine",
+    "file": "/home/shahrad/Desktop/engine/src/glad/gl.c",
+    "output": "/home/shahrad/Desktop/engine/build/executable"
   }
 ]

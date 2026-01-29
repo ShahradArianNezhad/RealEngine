@@ -1,9 +1,12 @@
 #include "GLFWwindow.hpp"
+#include "engine/graphics/renderer/renderer.hpp"
 #include <GLFW/glfw3.h>
 #include <stdexcept>
 
 void EngineWindow::initGLFW() {
-  glfwInit();
+  if (!glfwInit()) {
+    throw std::runtime_error("failed to initialize GLFW");
+  }
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -11,12 +14,17 @@ void EngineWindow::initGLFW() {
 
 void EngineWindow::createWindow() {
   window = glfwCreateWindow(WIDTH, HEIGHT, "my engine", nullptr, nullptr);
+  checkWindowInit();
+  glfwMakeContextCurrent(window);
+  Renderer::initGLAD();
+  glViewport(0, 0, WIDTH, HEIGHT);
+  glfwSetFramebufferSizeCallback(window, sizeChange_callback);
+}
+
+void EngineWindow::checkWindowInit() {
   if (window == NULL) {
     throw std::runtime_error{"Failed to initialize GLFW window"};
   }
-  glfwMakeContextCurrent(window);
-  glViewport(0, 0, WIDTH, HEIGHT);
-  glfwSetFramebufferSizeCallback(window, sizeChange_callback);
 }
 
 EngineWindow::EngineWindow(uint32_t w, uint32_t h) : WIDTH(w), HEIGHT(h) {
@@ -29,7 +37,6 @@ EngineWindow::~EngineWindow() { cleanup(); }
 bool EngineWindow::windowShouldClose() { return glfwWindowShouldClose(window); }
 
 void EngineWindow::updateWindow() {
-
   glfwSwapBuffers(window);
   glfwPollEvents();
 }

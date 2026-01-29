@@ -1,9 +1,6 @@
 #pragma once
-#include "engine/graphics/elementBuffer/elementBuffer.hpp"
-#include "engine/graphics/vertexBuffer/vertexBuffer.hpp"
-#include "engine/graphics/vertexLayout/vertexLayout.hpp"
+#include "engine/meshManager/meshManager.hpp"
 #include "glad/gl.h"
-#include <vector>
 
 class VertexArray {
 private:
@@ -11,6 +8,7 @@ private:
 
 public:
   VertexArray();
+  ~VertexArray() { glDeleteBuffers(1, &ID); };
   VertexArray(const VertexArray &) = delete;
   VertexArray &operator=(const VertexArray &) = delete;
   VertexArray(VertexArray &&other) noexcept;

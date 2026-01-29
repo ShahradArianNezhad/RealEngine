@@ -1,34 +1,57 @@
 #include "engine/graphics/shader/shader.hpp"
 #include "core/file/fileIO.hpp"
+#include "engine/meshManager/meshManager.hpp"
 #include "glad/gl.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-Shader::Shader(const std::string &vertexShaderPath,
-               const std::string &fragmentShaderPath) {
-  unsigned int vShader = glCreateShader(GL_VERTEX_SHADER);
-  const std::string vShaderStr = FileIO::readText(vertexShaderPath);
-  const char *vShaderC_str = vShaderStr.c_str();
-  glShaderSource(vShader, 1, &vShaderC_str, nullptr);
-  glCompileShader(vShader);
-  checkCompileErrors(vShader);
+Shader::Shader(VertexLayout layout) {
+  if (layout == VertexLayout::Pos) {
+    makeAndCompileShaders(std::string("./shaders/simple") + "/" + "shader.vert",
+                          std::string("./shaders/simple") + "/" +
+                              "shader.frag");
+    makeAndLinkProgram();
+    cleanShaders();
+  } else {
+    std::cout << "no shader found" << std::endl;
+  }
+}
 
-  unsigned int fShader = glCreateShader(GL_FRAGMENT_SHADER);
-  const std::string fShaderStr = FileIO::readText(fragmentShaderPath);
-  const char *fShaderC_str = fShaderStr.c_str();
-  glShaderSource(fShader, 1, &fShaderC_str, nullptr);
-  glCompileShader(fShader);
-  checkCompileErrors(fShader);
+Shader::Shader(const std::string &shaderFolderPath) {
+  makeAndCompileShaders(shaderFolderPath + "/" + "shader.vert",
+                        shaderFolderPath + "/" + "shader.frag");
+  makeAndLinkProgram();
+  cleanShaders();
+}
 
+void Shader::makeAndCompileShaders(const std::string &vertexShaderPath,
+                                   const std::string &fragmentShaderPath) {
+  vShader = glCreateShader(GL_VERTEX_SHADER);
+  fShader = glCreateShader(GL_FRAGMENT_SHADER);
+  compileShader(vertexShaderPath, vShader);
+  compileShader(fragmentShaderPath, fShader);
+}
+
+void Shader::makeAndLinkProgram() {
   programID = glCreateProgram();
   glAttachShader(programID, vShader);
   glAttachShader(programID, fShader);
   glLinkProgram(programID);
   checkProgramErrors();
+}
 
+void Shader::cleanShaders() {
   glDeleteShader(vShader);
   glDeleteShader(fShader);
+}
+
+void Shader::compileShader(const std::string &path, unsigned int dest) {
+  const std::string vShaderStr = FileIO::readText(path);
+  const char *vShaderC_str = vShaderStr.c_str();
+  glShaderSource(dest, 1, &vShaderC_str, nullptr);
+  glCompileShader(dest);
+  checkCompileErrors(dest);
 }
 
 void Shader::checkCompileErrors(unsigned int shaderID) {
@@ -54,25 +77,4 @@ void Shader::checkProgramErrors() {
 Shader::Shader(Shader &&other) noexcept {
   programID = other.programID;
   other.programID = 0;
-}
-
-void Shader::setUniformVec4(const std::string &name, float r, float g, float b,
-                            float a) {
-  int uniformLocation = glGetUniformLocation(programID, name.c_str());
-  if (uniformLocation == -1) {
-    std::cout << "ERROR: uniform location '" << name << "' was not found"
-              << std::endl;
-  }
-  use();
-  glUniform4f(uniformLocation, r, g, b, a);
-}
-
-void Shader::setUniformMat4(const std::string &name, glm::mat4 matrix) {
-  int uniformLocation = glGetUniformLocation(programID, name.c_str());
-  if (uniformLocation == -1) {
-    std::cout << "ERROR: uniform location '" << name << "' was not found"
-              << std::endl;
-  }
-  use();
-  glUniformMatrix4fv(uniformLocation, 1, false, glm::value_ptr(matrix));
 }

@@ -1,12 +1,12 @@
 #include "engine/graphics/elementBuffer/elementBuffer.hpp"
+#include <iostream>
 
 ElementBuffer::ElementBuffer() { glGenBuffers(1, &ID); }
 
-void ElementBuffer::setData(const void *indicies, size_t size) {
-  bind();
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indicies, GL_STATIC_DRAW);
-  unbind();
-  indexCount = size / sizeof(unsigned int);
+void ElementBuffer::upload(std::vector<unsigned int> &indices) {
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int),
+               indices.data(), GL_STATIC_DRAW);
+  indexCount = indices.size();
 }
 
 ElementBuffer::ElementBuffer(ElementBuffer &&other) noexcept {

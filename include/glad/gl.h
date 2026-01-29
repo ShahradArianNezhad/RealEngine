@@ -25,7 +25,6 @@
  *    http://glad.sh/#api=gl%3Acore%3D4.6&generator=c&options=
  *
  */
-
 #ifndef GLAD_GL_H_
 #define GLAD_GL_H_
 

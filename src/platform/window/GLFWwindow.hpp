@@ -1,6 +1,8 @@
 #pragma once
+#define GLFW_INCLUDE_NONE
 #include "platform/input/inputHandler.hpp"
 #include <GLFW/glfw3.h>
+#include <glad/gl.h>
 
 class EngineWindow {
 public:
@@ -13,6 +15,7 @@ public:
   ~EngineWindow();
   bool windowShouldClose();
   void updateWindow();
+  void setViewport();
 
 private:
   GLFWwindow *window;
@@ -23,6 +26,7 @@ private:
   void initGLFW();
   void createWindow();
   void cleanup();
+  void checkWindowInit();
 
   static void sizeChange_callback(GLFWwindow *_, int width, int height) {
     glViewport(0, 0, width, height);
