@@ -77,3 +77,8 @@ Shader::Shader(Shader &&other) noexcept {
   programID = other.programID;
   other.programID = 0;
 }
+
+void Shader::setunifotmMat4(std::string name, glm::mat4 &mat4) {
+  GLint modelLoc = glGetUniformLocation(programID, name.c_str());
+  glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(mat4));
+}

@@ -1,6 +1,6 @@
 #pragma once
+#include "engine/entityManager/entity/entity.hpp"
 #include "engine/materialManager/materialManager.hpp"
-#include "engine/scene/entity/entity.hpp"
 #include <vector>
 
 struct BatchKey {
@@ -33,4 +33,6 @@ public:
   BatchKey getKey() { return key; };
   std::vector<Entity> getEntities() { return entities; };
   void submit(Entity &entity) { entities.push_back(entity); }
+  auto begin() { return entities.begin(); }
+  auto end() { return entities.end(); }
 };

@@ -1,6 +1,6 @@
 #pragma once
 #include "./batch/batch.hpp"
-#include "engine/scene/entity/entity.hpp"
+#include "engine/entityManager/entity/entity.hpp"
 #include <unordered_map>
 
 class BatchManager {

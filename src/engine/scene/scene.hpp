@@ -1,4 +1,4 @@
-#include "./entity/entity.hpp"
+#include "engine/entityManager/entity/entity.hpp"
 #include <vector>
 class Scene {
 private:

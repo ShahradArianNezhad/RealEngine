@@ -25,6 +25,7 @@ public:
   Shader &operator=(const Shader &) = delete;
   Shader(Shader &&other) noexcept;
 
+  void setunifotmMat4(std::string name, glm::mat4 &mat4);
   void use() const { glUseProgram(programID); }
   unsigned int getID() { return programID; }
 };

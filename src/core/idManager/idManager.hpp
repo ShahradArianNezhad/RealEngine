@@ -8,6 +8,7 @@ private:
 
 public:
   IDManager() {};
+  IDManager(unsigned int start) { next_count = start; };
   unsigned int get();
   void release(unsigned int id);
 };

@@ -1,7 +1,8 @@
 #include "./batchManager.hpp"
 
 void BatchManager::submit(Entity &entity) {
-  BatchKey key = {.mesh = entity.mesh};
+  BatchKey key = {.mesh = entity.renderComp->mesh,
+                  .material = entity.renderComp->material};
   if (!batches.contains(key)) {
     batches[key] = Batch(key);
   }

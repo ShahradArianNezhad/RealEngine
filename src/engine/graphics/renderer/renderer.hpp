@@ -1,4 +1,5 @@
 #pragma once
+#include "engine/entityManager/entity/entity.hpp"
 #include "engine/materialManager/materialManager.hpp"
 #define GLFW_INCLUDE_NONE
 #include "engine/graphics/batchManager/batchManager.hpp"
@@ -18,6 +19,7 @@ private:
   ShaderManager shaderManager;
   void collectAndBatch(Scene &scene);
   void renderBatches();
+  Camera *currentCamera = nullptr;
 
 public:
   Renderer(MeshManager &manager, MaterialManager &matManager);
@@ -28,4 +30,5 @@ public:
 
   void flush();
   void renderScene(Scene &scene);
+  void useCamera(Camera *cam);
 };
