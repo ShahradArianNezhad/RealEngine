@@ -1,7 +1,7 @@
 #include "./engine.hpp"
 #include "engine/meshManager/meshManager.hpp"
-#include <algorithm>
 #include <glm/ext/vector_float2.hpp>
+#include <chrono>
 #include <glm/ext/vector_float3.hpp>
 #include "../game/game.hpp"
 
@@ -64,12 +64,24 @@ Entity *Engine::makeCircle(float x, float y, float r) {
 }
 
 
+void Engine::syncFramerate(double dt){
+    if(targetFPS > 0) {
+    double targetFrameTime = 1.0 / targetFPS;
+    if(dt < targetFrameTime) {
+        clock.sleep(targetFrameTime - dt);  
+      }
+    }
+}
+
+
 void Engine::run(Game& game){
   game.init();
   while (!window.windowShouldClose()) {
     renderer.flush();
     renderer.renderCurrentScene();
     window.updateWindow();
-    game.update(0);
+    auto dt = clock.getDeltaTime();
+    game.update(dt);
+    syncFramerate(dt);
   }
 }

@@ -6,6 +6,9 @@
 #include "engine/materialManager/materialManager.hpp"
 #include "engine/meshManager/meshManager.hpp"
 #include "engine/sceneManager/sceneManager.hpp"
+#include "core/clock/clock.hpp"
+#include <cstdint>
+
 
 class Game;
 class Engine {
@@ -15,6 +18,10 @@ private:
   MaterialManager materialManager;
   SceneManager sceneManager;
   EntityManager entityManager;
+  Clock clock;
+  uint32_t targetFPS=0;
+
+  void syncFramerate(double dt);
 
 public:
 
@@ -26,5 +33,6 @@ public:
   Entity *makeRect(float x, float y, float width, float height);
   Entity *makeCircle(float x, float y, float r);
   Entity *makeSprite(float x,float y,float width,float height,std::string spritePath);
+  void setTargetFPS(uint32_t t){targetFPS=t;};
   void run(Game& game);
 };
