@@ -1,5 +1,6 @@
 #pragma once
 #include "./component/components.hpp"
+#include <glm/ext/matrix_transform.hpp>
 #include <glm/glm.hpp>
 #include <iostream>
 #include <optional>
@@ -9,6 +10,15 @@ struct Entity {
   std::optional<RenderComponent> renderComp;
   unsigned int tint=0xFFFFFF00;
 
+  glm::mat4 getModelMatrix(){
+    glm::mat4 transform{1.0f};
+    if (transformComp) {
+      transform = glm::translate(transform, transformComp->position);
+      transform = glm::scale(transform, transformComp->scale);
+      transform = glm::rotate(transform, transformComp->rotation,{0.0f,0.0f,1.0f});
+    }
+    return transform;
+  }
 
   glm::vec4 tintToVec4(){
     float r =((static_cast<unsigned int>(tint)&0xFF000000)>>24)/255.0f; 

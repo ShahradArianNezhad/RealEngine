@@ -46,6 +46,23 @@ Entity *Engine::makeRect(float x, float y, float width, float height) {
   return &e;
 }
 
+Entity *Engine::makeCircle(float x, float y, float r) {
+  auto meshId = meshManager.makePrimitive(MeshManager::Primitive::Circle);
+  auto matId = materialManager.newMat();
+  auto& matHandle = materialManager.get(matId);
+  matHandle.color=Color::White;
+  Entity &e = entityManager.newEntity();
+  e.renderComp = RenderComponent(meshId, matId);
+  e.transformComp = TransformComponent{
+      .position = {x, y, 0.0f},
+      .scale = {r, r, 1.0f},
+      .rotation=0
+  };
+
+  renderer.addEntity(&e);
+  return &e;
+}
+
 
 void Engine::run(Game& game){
   game.init();

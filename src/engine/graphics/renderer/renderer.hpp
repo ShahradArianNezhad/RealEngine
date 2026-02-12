@@ -22,6 +22,7 @@ private:
   Scene *currentScene=nullptr;
   static glm::mat4 projectionMatrix;
 
+  void getGlErrors();
   void collectAndBatch(Scene *scene);
   void renderBatches();
   glm::mat4 getViewMatrix();

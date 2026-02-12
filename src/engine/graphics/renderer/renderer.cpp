@@ -43,33 +43,24 @@ glm::mat4 Renderer::getProjectionMatrix() {
 }
 
 void Renderer::renderBatches() {
-
   for (auto &[key, batch] : batchManager.getBatches()) {
     auto &mesh = meshManager.get(key.mesh);
     auto &mat = materialManager.get(key.material);
     auto &shader = shaderManager.getShaderHandle(mesh.layout);
     shader.use();
     gpu.useMesh(mesh);
-    if(mat.texture)mat.use();
+    mat.use();
     if(mat.color)shader.setunifotmVec4("iColor", mat.colorToVec4());
 
     for (auto &e : batch) {
-      auto transform = glm::mat4(1.0f);
-      if (e->transformComp) {
-        transform = glm::translate(transform, e->transformComp->position);
-        transform = glm::scale(transform, e->transformComp->scale);
-        transform = glm::rotate(transform, e->transformComp->rotation,{0.0f,0.0f,1.0f});
-      }
-      shader.setunifotmMat4("model", transform);
+      auto model =e->getModelMatrix();
+      shader.setunifotmMat4("model", model);
       shader.setunifotmMat4("projection", Renderer::projectionMatrix);
       shader.setunifotmVec4("iTint", e->tintToVec4());
       glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
     }
   }
-  GLenum err;
-  while ((err = glGetError()) != GL_NO_ERROR) {
-    std::cout << "OpenGL error: " << err << std::endl;
-  }
+  getGlErrors();
 
 }
 
@@ -82,3 +73,12 @@ void Renderer::renderCurrentScene() {
   renderBatches();
   batchManager.cleanBatches();
 }
+
+void Renderer::getGlErrors(){
+  GLenum err;
+  while ((err = glGetError()) != GL_NO_ERROR) {
+    std::cout << "OpenGL error: " << err << std::endl;
+  }
+}
+
+

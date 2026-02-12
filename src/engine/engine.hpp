@@ -24,6 +24,7 @@ public:
   Engine() ;
   SceneId newScene(){return sceneManager.newScene();}
   Entity *makeRect(float x, float y, float width, float height);
+  Entity *makeCircle(float x, float y, float r);
   Entity *makeSprite(float x,float y,float width,float height,std::string spritePath);
   void run(Game& game);
 };
