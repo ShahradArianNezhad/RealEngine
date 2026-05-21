@@ -16,6 +16,7 @@ void EngineWindow::createWindow() {
   window = glfwCreateWindow(Screen::width, Screen::height, "my engine", nullptr, nullptr);
   checkWindowInit();
   glfwMakeContextCurrent(window);
+  glfwSwapInterval(0);
   Renderer::initGLAD();
   glViewport(0, 0,Screen::width, Screen::height);
   glfwSetFramebufferSizeCallback(window, sizeChange_callback);

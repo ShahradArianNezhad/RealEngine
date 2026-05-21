@@ -1,6 +1,7 @@
 #include "./shader.hpp"
-#include "core/file/fileIO.hpp"
+#include "utils/file/fileIO.hpp"
 #include "glad/gl.h"
+#include "utils/types.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
@@ -80,12 +81,12 @@ Shader::Shader(Shader &&other) noexcept {
   other.programID = 0;
 }
 
-void Shader::setunifotmMat4(std::string name, glm::mat4 &mat4) {
+void Shader::setunifotmMat4(std::string name, mat4 &mat4) {
   GLint modelLoc = glGetUniformLocation(programID, name.c_str());
   glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(mat4));
 }
 
-void Shader::setunifotmVec4(std::string name, glm::vec4 vec4) {
+void Shader::setunifotmVec4(std::string name, vec4 vec4) {
   GLint modelLoc = glGetUniformLocation(programID, name.c_str());
   glUniform4fv(modelLoc, 1, glm::value_ptr(vec4));
 }

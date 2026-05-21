@@ -1,6 +1,6 @@
 #pragma once
 #include "./material/material.hpp"
-#include "core/idManager/idManager.hpp"
+#include "utils/idManager/idManager.hpp"
 #include <unordered_map>
 
 using MaterialID = unsigned int;
@@ -13,9 +13,16 @@ private:
 public:
   MaterialManager() {};
   Material &get(MaterialID id) { return materials[id]; };
+
   MaterialID newMat() {
     auto id = idManager.get();
     materials.emplace(id,Material{});
+    return id;
+  }
+
+  MaterialID newMat(std::string texPath) {
+    auto id = idManager.get();
+    materials.emplace(id,Material{texPath});
     return id;
   }
 };

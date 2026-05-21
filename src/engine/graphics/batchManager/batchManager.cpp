@@ -1,13 +1,15 @@
 #include "./batchManager.hpp"
+#include "engine/entityManager/component/components.hpp"
 
-BatchKey BatchManager::submit(Entity *entity) {
-  BatchKey key = {.mesh = entity->renderComp->mesh,
-                  .material = entity->renderComp->material};
+BatchKey BatchManager::submit(EntityId entity) {
+  auto renderComp = entityManager.componentManager.getComponent<ComponentType::RENDER>(entity);
+  BatchKey key = {.mesh = renderComp.mesh,
+                  .material = renderComp.material};
   if (!batches.contains(key)) {
     batches[key] = Batch(key);
   }
   batches[key].submit(entity);
-  batches[key].addTransform(entity->getModelMatrix());
-  batches[key].addColor(entity->tintToVec4());
+  batches[key].addTransform(entityManager.makeModelMatrix(entity));
+  batches[key].addColor(entityManager.colorToVec4(entity));
   return key;
 }

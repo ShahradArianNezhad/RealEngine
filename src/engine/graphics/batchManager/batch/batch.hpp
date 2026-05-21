@@ -1,5 +1,5 @@
 #pragma once
-#include "engine/entityManager/entity/entity.hpp"
+#include "engine/entityManager/component/components.hpp"
 #include "engine/materialManager/materialManager.hpp"
 #include <cstddef>
 #include <glm/ext/matrix_float4x4.hpp>
@@ -26,21 +26,21 @@ template <> struct hash<BatchKey> {
 
 class Batch {
 private:
-  std::vector<Entity *> entities;
-  std::vector<glm::mat4> transformInstances;
-  std::vector<glm::vec4> colorInstances;
+  std::vector<EntityId> entities;
+  std::vector<mat4> transformInstances;
+  std::vector<vec4> colorInstances;
   BatchKey key;
 
 public:
   Batch() {};
   Batch(BatchKey aKey) : key(aKey) {};
   BatchKey getKey() { return key; };
-  std::vector<Entity *> getEntities() { return entities; };
-  void submit(Entity *entity) { entities.push_back(entity); }
-  void addTransform(glm::mat4 transform){transformInstances.push_back(transform);};
-  void addColor(glm::vec4 color){colorInstances.push_back(color);};
-  std::vector<glm::mat4>& getModelInstanceData(){return transformInstances;};
-  std::vector<glm::vec4>& getColorInstanceData(){return colorInstances;};
+  std::vector<EntityId> getEntities() { return entities; };
+  void submit(EntityId entity) { entities.push_back(entity); }
+  void addTransform(mat4 transform){transformInstances.push_back(transform);};
+  void addColor(vec4 color){colorInstances.push_back(color);};
+  std::vector<mat4>& getModelInstanceData(){return transformInstances;};
+  std::vector<vec4>& getColorInstanceData(){return colorInstances;};
   auto begin() { return entities.begin(); }
   auto end() { return entities.end(); }
   size_t size(){return entities.size();}

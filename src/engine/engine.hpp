@@ -1,13 +1,14 @@
 #pragma once
 #include "../platform/window/GLFWwindow.hpp"
 #include "./graphics/renderer/renderer.hpp"
-#include "engine/entityManager/entity/entity.hpp"
 #include "engine/entityManager/entityManager.hpp"
 #include "engine/materialManager/materialManager.hpp"
 #include "engine/meshManager/meshManager.hpp"
 #include "engine/sceneManager/sceneManager.hpp"
-#include "core/clock/clock.hpp"
+#include "engine/eventManager/eventManager.hpp"
+#include "utils/clock/clock.hpp"
 #include <cstdint>
+#include <glm/ext/vector_float3.hpp>
 
 
 class Game;
@@ -16,23 +17,26 @@ private:
   EngineWindow window{Screen::width, Screen::height};
   MeshManager meshManager;
   MaterialManager materialManager;
-  SceneManager sceneManager;
-  EntityManager entityManager;
+  EventManager eventManager;
+  SceneManager sceneManager{eventManager};
   Clock clock;
-  uint32_t targetFPS=0;
+  uint32_t targetFPS=60;
 
-  void syncFramerate(double dt);
+  void syncFPS();
 
 public:
 
-  Renderer renderer{meshManager, materialManager,sceneManager};
+  EntityManager entityManager{eventManager};
+  Renderer renderer{meshManager, materialManager,sceneManager,entityManager};
+  void useCamera(EntityId camera,SceneId sceneid);
+  void sleep(int ms);
 
 
   Engine();
   SceneId newScene(){return sceneManager.newScene();}
-  Entity *makeRect(float x, float y, float width, float height);
-  Entity *makeCircle(float x, float y, float r);
-  Entity *makeSprite(float x,float y,float width,float height,std::string spritePath);
+  EntityId makeRect(float x, float y, float width, float height);
+  EntityId makeCircle(float x, float y, float r);
+  EntityId makeSprite(float x,float y,float width,float height,std::string spritePath);
   SceneId getCurrentScene(){return renderer.getCurrentScene();};
   void setTargetFPS(uint32_t t){targetFPS=t;};
   void run(Game* game);

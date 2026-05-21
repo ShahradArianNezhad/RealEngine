@@ -1,5 +1,5 @@
 #pragma once
-#include "engine/entityManager/entity/entity.hpp"
+#include "engine/entityManager/entityManager.hpp"
 #include "engine/materialManager/materialManager.hpp"
 #define GLFW_INCLUDE_NONE
 #include "engine/graphics/batchManager/batchManager.hpp"
@@ -13,25 +13,26 @@
 
 class Renderer {
 private:
-  BatchManager batchManager;
   MeshManager &meshManager;
   MaterialManager &materialManager;
   SceneManager& sceneManager;
+  EntityManager& entityManager;
+  BatchManager batchManager{entityManager};
   GpuBuffers gpu;
   ShaderManager shaderManager;
   SceneId currentScene=0;
-  static glm::mat4 projectionMatrix;
+  static mat4 projectionMatrix;
 
   void getGlErrors();
   void collectAndBatch(Scene *scene);
   void renderBatches();
-  glm::mat4 getViewMatrix();
-  static glm::mat4 getProjectionMatrix();
-  VertexBuffer makeColorInstanceVBO(Batch& batch);
-  VertexBuffer makeModelInstanceVBO(Batch& batch);
+  mat4 getViewMatrix();
+  static mat4 getProjectionMatrix();
+  mat4 makeModelMatrix(EntityId id);
+ 
 
 public:
-  Renderer(MeshManager &manager, MaterialManager &matManager,SceneManager& sceneManager);
+  Renderer(MeshManager &manager, MaterialManager &matManager,SceneManager& sceneManager,EntityManager& entityManager);
   Renderer(const Renderer &) = delete;
   Renderer &operator=(const Renderer &) = delete;
   Renderer(Renderer &&other) = delete;
@@ -39,7 +40,7 @@ public:
   static void recalculateProjectionMatrix(){Renderer::projectionMatrix=getProjectionMatrix();};
 
   void useScene(SceneId scene) { currentScene = scene; };
-  void addEntity(Entity* e){sceneManager.get(currentScene)->addEntity(e);}
+  void addEntity(EntityId e){sceneManager.get(currentScene)->addEntity(e);}
   SceneId getCurrentScene(){return currentScene;}
   void flush();
   void renderCurrentScene();

@@ -1,8 +1,8 @@
 #pragma once
 #include "./mesh/mesh.hpp"
-#include "core/idManager/idManager.hpp"
+#include "utils/idManager/idManager.hpp"
 #include <cstdint>
-#include "core/hasher64/hasher64.hpp"
+#include "utils/hasher64/hasher64.hpp"
 #include <unordered_map>
 
 using MeshID = unsigned int;

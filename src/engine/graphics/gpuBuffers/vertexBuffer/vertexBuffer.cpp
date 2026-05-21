@@ -11,23 +11,10 @@ VertexBuffer::VertexBuffer(std::vector<float> &data) {
 
 VertexBuffer::VertexBuffer() { glGenBuffers(1, &ID); }
 
-void VertexBuffer::upload(std::vector<float> &data, GLenum mode) {
-  glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(float), data.data(), mode);
-}
 void VertexBuffer::upload(std::vector<Vertex> &data, GLenum mode) {
   auto merged = Vertex::mergeVertices(data);
   glBufferData(GL_ARRAY_BUFFER, merged.size() * sizeof(float), merged.data(),
                mode);
-}
-
-void VertexBuffer::upload(std::vector<glm::mat4> &data,GLenum mode){
-  bind();
-  glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(glm::mat4), data.data(), mode);
-}
-
-void VertexBuffer::upload(std::vector<glm::vec4> &data,GLenum mode){
-  bind();
-  glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(glm::mat4), data.data(), mode);
 }
 
 VertexBuffer::VertexBuffer(VertexBuffer &&other) noexcept {

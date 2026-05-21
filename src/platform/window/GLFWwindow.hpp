@@ -32,7 +32,7 @@ private:
   void cleanup();
   void checkWindowInit();
 
-  static void sizeChange_callback(GLFWwindow *_, int width, int height) {
+  static void sizeChange_callback(GLFWwindow *, int width, int height) {
     glViewport(0, 0, width, height);
     Screen::width = width;
     Screen::height = height;

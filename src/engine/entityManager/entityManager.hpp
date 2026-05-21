@@ -1,9 +1,38 @@
-#include "./entity/entity.hpp"
+#pragma once
+#include "engine/entityManager/ComponentManager/componentManager.hpp"
+#include "utils/idManager/idManager.hpp"
+#include "engine/entityManager/component/components.hpp"
+#include "engine/eventManager/eventManager.hpp"
+#include "utils/types.hpp"
+#include <cstdint>
 #include <vector>
+
+
+using EntityId = uint32_t;
+
 class EntityManager {
 private:
-  std::vector<Entity> entities;
+  IDManager idManager;
+  EventManager& eventManager;
+  std::vector<EntityId> entities;
 
 public:
-  Entity& newEntity();
+  EntityManager(EventManager& eManager):eventManager(eManager){};
+  ComponentManager componentManager{};
+  EntityId newEntity();
+  EntityId newEntity(struct RenderComponent,struct TransformComponent);
+  void deleteEntity(EntityId id);
+
+  EntityId makeCamera();
+
+  bool isColliding(EntityId e1,EntityId e2);
+  bool handleCircleCollision(EntityId e1,EntityId e2);
+
+
+  vec4 colorToVec4(EntityId id);
+  void setColor(EntityId id,unsigned int hex);
+  void setColor(EntityId id,unsigned int r,unsigned int g,unsigned int b,unsigned int a);
+  void setPos(EntityId id,vec3 pos);
+  vec3 getPos(EntityId id);
+  mat4 makeModelMatrix(EntityId id);
 };

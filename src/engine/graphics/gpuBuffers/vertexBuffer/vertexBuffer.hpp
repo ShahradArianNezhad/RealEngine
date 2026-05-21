@@ -12,7 +12,7 @@ private:
 public:
   VertexBuffer();
   VertexBuffer(std::vector<float> &data);
-  ~VertexBuffer() { glDeleteBuffers(1, &ID); };
+  ~VertexBuffer() {if(ID) glDeleteBuffers(1, &ID); };
   VertexBuffer(const VertexBuffer &) = delete;
   VertexBuffer &operator=(const VertexBuffer &) = delete;
 
@@ -22,7 +22,10 @@ public:
   void bind() const { glBindBuffer(GL_ARRAY_BUFFER, ID); }
   void unbind() const { glBindBuffer(GL_ARRAY_BUFFER, 0); }
   void upload(std::vector<Vertex> &data, GLenum mode);
-  void upload(std::vector<float> &data, GLenum mode);
-  void upload(std::vector<glm::mat4> &data,GLenum mode);
-  void upload(std::vector<glm::vec4> &data,GLenum mode);
+
+  template <typename T>
+    void upload(const std::vector<T> &data,GLenum mode){
+      bind();
+      glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(T), data.data(), mode);
+    }
 };

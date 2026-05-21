@@ -13,4 +13,12 @@ public:
   void useInstanceMat4(VertexBuffer& instanceVBO, unsigned int location);
   void useInstanceVec4(VertexBuffer& instanceVBO, unsigned int location);
   void reset();
+
+  template <typename T>
+    static VertexBuffer makeInstanceVBO(std::vector<T>& data){
+      VertexBuffer instanceVBO;
+      instanceVBO.upload(data,GL_STATIC_DRAW);
+      return instanceVBO;
+    }
+
 };
