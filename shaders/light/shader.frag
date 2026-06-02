@@ -16,6 +16,7 @@ void main()
   float att=max(0.0,1.0-dist);
   att*=att;
   vec3 light = ocolor * att * ointensity;
-    FragColor = vec4(light,att);
+  FragColor = vec4(light,att);
+  
 }
 

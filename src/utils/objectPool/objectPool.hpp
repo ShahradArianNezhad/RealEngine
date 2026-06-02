@@ -17,15 +17,17 @@ class ObjectPool{
       idToIndex[obj.id]=index;
     }
     void remove(uint32_t id){
-      auto index = idToIndex[id];
-      if(index==pool.size()-1){
-        pool.pop_back();
-        idToIndex.erase(id);
-      }else{
+      if(!idToIndex.contains(id))return;
+      auto index = idToIndex.at(id);
+
+      if(index != pool.size() - 1){
         pool[index] = pool.back();
-        idToIndex[pool.back().id]=index;
-        pool.pop_back();
+        idToIndex[pool.back().id] = index;
       }
+
+      pool.pop_back();
+      idToIndex.erase(id);
     }
+    
 
 };

@@ -114,7 +114,7 @@ EntityId Engine::makeChar(char c,vec3 pos,std::string font,int size){
   auto matId = materialManager.newMat(texId);
   auto& character = glyphManager.getGlyphChar(c,font,size);
   auto transformComp = TransformComponent{
-      .position = {pos.x+character.width/2.0, pos.y-character.height/2.0, pos.z},
+      .position = {pos.x+character.width/2.0, pos.y- character.bearingY+ (character.height)/2.0, pos.z},
       .scale = {character.width/2.0, character.height/2.0, 1.0f},
       .rotation=0
   };

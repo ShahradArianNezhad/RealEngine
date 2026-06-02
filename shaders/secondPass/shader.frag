@@ -11,6 +11,7 @@ void main()
 { 
   vec3 scene = texture(SceneTexture,TexCoords).rgb;
   vec3 light = texture(LightTexture,TexCoords).rgb;
-  FragColor = vec4(scene*(ambient+light),1.0);
+  //FragColor = vec4(scene*(ambient+light),1.0);
+  FragColor = vec4(scene*ambient + scene*light,1.0);
 }
 

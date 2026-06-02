@@ -7,6 +7,10 @@
 class ScheduleManager{
   IDManager idManager;
   ObjectPool<Task> taskPool;
+  std::vector<uint32_t> pendingRemoves;
+  std::vector<Task> pendingAdds;
+  void flushRemoves();
+  void flushAdds();
 
   public:
 
