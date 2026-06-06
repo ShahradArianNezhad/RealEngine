@@ -1,7 +1,11 @@
 #include "inputHandler.hpp"
 #include "utils/logger/logger.hpp"
+#include <GLFW/glfw3.h>
 
-InputHandler::InputHandler(GLFWwindow *window) : window(window) {}
+InputHandler::InputHandler(GLFWwindow *window) : window(window) {
+  glfwSetScrollCallback(window, InputHandler::wheelCallback);
+}
+
 bool InputHandler::checkKeyPress(Key key) {
   int glfwKey = static_cast<int>(key);
   if(glfwGetKey(window, glfwKey) == GLFW_PRESS){
@@ -9,6 +13,21 @@ bool InputHandler::checkKeyPress(Key key) {
     return true;
   };
   return false;
+}
+
+
+bool InputHandler::checkMousePress(Mouse button){
+  int state = glfwGetMouseButton(window, (int)button);
+  if (state == GLFW_PRESS)return true;
+  return false;
+}
+
+
+
+vec2 InputHandler::getCursorPos(){
+  double xpos, ypos;
+  glfwGetCursorPos(window, &xpos, &ypos);
+  return {xpos,ypos};
 }
 
 

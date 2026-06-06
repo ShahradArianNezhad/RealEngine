@@ -11,6 +11,13 @@ inline uint32_t width = 800;
 inline uint32_t height = 600;
 } // namespace Screen
 
+
+enum Cursor  {
+  NORMAL=GLFW_CURSOR_NORMAL,
+  HIDDEN=GLFW_CURSOR_HIDDEN,
+  DISABLED=GLFW_CURSOR_DISABLED
+};
+
 class EngineWindow {
 private:
   GLFWwindow *window=nullptr;
@@ -32,6 +39,7 @@ public:
   void setWindowed();
   void setWindowSize(int w,int h);
   void setWindowIcon(std::string iconPath);
+  void setDisplayCursor(Cursor mode);
 
 
 private:
@@ -48,3 +56,4 @@ private:
     LOG_INFO("window size changed: {}x{}",width,height);
   }
 };
+

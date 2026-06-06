@@ -23,6 +23,22 @@ void EngineWindow::createWindow() {
   glfwSetFramebufferSizeCallback(window, sizeChange_callback);
 }
 
+
+void EngineWindow::setDisplayCursor(Cursor mode){
+  switch(mode){
+    case HIDDEN:
+      glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+      break;
+    case NORMAL:
+      glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+      break;
+    case DISABLED:
+      glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+      break;
+  }
+}
+
+
 void EngineWindow::checkWindowInit() {
   if (window == NULL) {
     LOG_FATAL("Failed to initialize window");
