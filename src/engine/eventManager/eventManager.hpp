@@ -1,6 +1,8 @@
 #pragma once
 #include "engine/entityManager/component/components.hpp"
 #include "utils/idManager/idManager.hpp"
+#include "utils/objectPool/objectPool.hpp"
+#include <map>
 
 struct EntityDestroyedEvent{
   EntityId id;
@@ -12,38 +14,40 @@ using subscriptionId = uint32_t;
 class EventManager{
 
 public:
-  using Handler = std::function<void(const EntityDestroyedEvent&)>;
+  template<typename T>
+    struct Handler{
+      subscriptionId id;
+      std::function<void(const T&)> func;
+    };
   
-   subscriptionId subscribe(Handler handler){
-    auto id = idManager.get();
-    if(id>=listeners.size()){
-      listeners.push_back(handler);
-    }else{
-      listeners[id]=handler;
+  template<typename T>
+   static inline subscriptionId subscribe(std::function<void(const T&)> handler){
+      LOG_DEBUG("subscribed to event :{}",typeid(T).name());
+      auto id = ids<T>.get();
+      handlerPool<T>.add(Handler{id,handler});
+      return id;
     }
-    LOG_DEBUG("subscribed to entityDestroyedEvent emitter: {}",id);
-    return id;
-  }
 
-  void unsubscribe(subscriptionId id){
-    LOG_DEBUG("unsubscribe from entityDestroyedEvent emitter: {}",id);
-    listeners[id]=nullptr;
-  }
-
-  void emit(const EntityDestroyedEvent& event){
-    LOG_DEBUG("emit entityDestroyedEvent");
-    for(auto& listener:listeners){
-      if(listener!=nullptr){
-        listener(event);
-      };
-
+  template<typename T>
+    static inline void unsubscribe(subscriptionId id){
+      LOG_DEBUG("unsubscribe from event: {}",typeid(T).name());
+      ids<T>.release(id);
+      handlerPool<T>.remove(id);
     }
-  }
+
+  template<typename T>
+    static inline void emit(const T& event){
+      LOG_DEBUG("emit event:{}",typeid(T).name());
+      for(const auto& listener:handlerPool<T>.pool) listener.func(event);
+      }
 
 
 private:
-  std::vector<Handler> listeners;
-  IDManager idManager;
+  template<typename T>
+    static inline ObjectPool<Handler<T>> handlerPool;
+
+  template<typename T>
+    static inline IDManager ids;
 
 
 };

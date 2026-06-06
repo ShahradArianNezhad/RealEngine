@@ -16,6 +16,7 @@ class ObjectPool{
       pool.push_back(obj);
       idToIndex[obj.id]=index;
     }
+
     void remove(uint32_t id){
       if(!idToIndex.contains(id))return;
       auto index = idToIndex.at(id);

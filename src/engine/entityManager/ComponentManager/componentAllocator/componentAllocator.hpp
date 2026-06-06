@@ -38,17 +38,21 @@ public:
     }
 
     size_t index = entityToIndex[id];
-    if(index==components.size()-1){
+    size_t lastIndex = components.size() - 1;
+
+    if(index == lastIndex){
       components.pop_back();
       entityToIndex.erase(id);
       indexToEntity.pop_back();
     }else{
-      components[index] = components[components.size()-1];
+      components[index] = std::move(components[lastIndex]);
       components.pop_back();
-      indexToEntity[index]=indexToEntity[components.size()-1];
-      auto backId = indexToEntity[components.size()-1];
+
+      indexToEntity[index] = indexToEntity[lastIndex];
       indexToEntity.pop_back();
-      entityToIndex[backId]=index;
+
+      entityToIndex[indexToEntity[index]] = index;
+      entityToIndex.erase(id);
     }
   }
   

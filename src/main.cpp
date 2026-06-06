@@ -24,6 +24,7 @@ public:
     engine.entityManager.componentManager.setComponent<ComponentType::CAMERA2D>(camera,cam);
     engine.useCamera(camera, engine.getCurrentScene());
     engine.setTargetFPS(60);
+    engine.entityManager.deleteEntity(c4);
 
   }
 
