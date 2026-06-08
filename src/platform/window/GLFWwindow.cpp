@@ -21,6 +21,7 @@ void EngineWindow::createWindow() {
   Renderer::initGLAD();
   glViewport(0, 0,Screen::width, Screen::height);
   glfwSetFramebufferSizeCallback(window, sizeChange_callback);
+  LOG_INFO("window created width : {} height : {}",Screen::width,Screen::height);
 }
 
 
@@ -74,6 +75,7 @@ void EngineWindow::setWindowIcon(std::string iconPath){
     image.height=h;
     image.pixels=data;
     glfwSetWindowIcon(window, 1, &image);
+    LOG_INFO("window icon set : {}",iconPath);
     stbi_image_free(data);
 }
 
@@ -87,12 +89,14 @@ void EngineWindow::setFullscreen(size_t monitor){
   }
  
   glfwSetWindowMonitor(window, monitors[monitor], 0, 0, mode->width, mode->height, mode->refreshRate);
+  LOG_INFO("window set fullscreen on monitor : {}",monitor);
 }
 
 void EngineWindow::setWindowed(){
   int w=800;
   int h=600;
   glfwSetWindowMonitor(window, NULL, 0, 0, w ,h ,0);
+  LOG_INFO("window set windowed");
 }
 
 
@@ -106,6 +110,7 @@ void EngineWindow::updateWindow() {
 }
 
 void EngineWindow::cleanup() {
+  LOG_INFO("destroying window");
   glfwDestroyWindow(window);
   glfwTerminate();
 }

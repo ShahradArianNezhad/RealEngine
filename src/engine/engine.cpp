@@ -14,13 +14,13 @@
 
 
 Engine::Engine(){
-  Logger::startLogger("logs.txt");
+  std::string logFile="logs.txt";
+  Logger::startLogger(logFile);
   Logger::setLogLevel(LogLevel::Debug);
   LOG_INFO("Engine initializing");
   SceneId defaultScene = newScene();
   renderer.useScene(defaultScene);
   AudioManager::init();
-  auto x =AudioManager::playSound("./test.mp3");
 }
 
 Engine::~Engine(){
@@ -79,6 +79,7 @@ void Engine::useCamera(EntityId camera,SceneId sceneid){
   if(scene!=nullptr) scene->setActiveCamera(camera);
   else std::cout << "error : cannot set camera on non existing scene" << std::endl;
   LOG_DEBUG("use camera id:{}",camera);
+  LOG_INFO("set active camera : {}, on scene : {}",camera,sceneid);
 }
 
 
@@ -109,11 +110,6 @@ void Engine::run(Game* game) {
 }
 
 
-void Engine::sleep(int ms){
-  std::this_thread::sleep_for(std::chrono::milliseconds(ms));
-}
-
-
 EntityId Engine::makeChar(char c,vec3 pos,std::string font,int size){
   auto meshId = meshManager.makeQuad();
   auto texId = glyphManager.getGlyphTex(font, size);
@@ -129,6 +125,7 @@ EntityId Engine::makeChar(char c,vec3 pos,std::string font,int size){
   auto id = entityManager.newEntity(RenderComponent{meshId,matId},transformComp);
   entityManager.componentManager.setComponent<ComponentType::UVRECT>(id, uvComp);
   renderer.addEntity(id);
+  LOG_DEBUG("made character : {}, font : {}, size : {}",c,font,size);
   return id;
 }
 

@@ -38,7 +38,6 @@ public:
   InputHandler inputHandler{window.getWindowPtr()};
   Renderer renderer{meshManager, materialManager,sceneManager,entityManager};
   void useCamera(EntityId camera,SceneId sceneid);
-  void sleep(int ms);
 
 
   Engine();
