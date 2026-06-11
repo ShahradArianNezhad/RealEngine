@@ -47,14 +47,14 @@ public:
 
 
   MaterialID newMat(GLuint texId){
-    //Hasher64 hasher;
-    //hasher.combine(&texId,4);
-    //auto sig = hasher.digest();
-    //if(materialCache.contains(sig)) return materialCache[sig];
+    Hasher64 hasher;
+    hasher.combine(&texId,4);
+    auto sig = hasher.digest();
+    if(materialCache.contains(sig)) return materialCache[sig];
     auto id = idManager.get();
     materials.try_emplace(id,texId);
     LOG_DEBUG("Material created: {{id:{},{}}}",id,materials[id]);
-    //materialCache[sig]=id;
+    materialCache[sig]=id;
     return id;
   }
 };
