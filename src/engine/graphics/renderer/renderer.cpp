@@ -1,5 +1,6 @@
 #include "renderer.hpp"
 #include "engine/entityManager/component/components.hpp"
+#include "engine/eventManager/eventManager.hpp"
 #include "engine/graphics/gpuBuffers/vertexBuffer/vertexBuffer.hpp"
 #include "engine/sceneManager/sceneManager.hpp"
 #include "glad/gl.h"
@@ -43,6 +44,9 @@ void Renderer::setDepthParams(){
 }
 
 
+void Renderer::addEntity(EntityId e){
+  sceneManager.get(currentScene)->addEntity(e);
+}
 
 void Renderer::initLightBuffer(){
   lightBuffer.bind();
@@ -64,7 +68,6 @@ void Renderer::initRenderBuffer(){
 
 void Renderer::collectAndBatch(Scene *scene) {
   for (auto entityId : scene->collectEntities()) {
-    if(entityId==UINT32_MAX)continue;
     if (isInScreen(entityId) && entityManager.componentManager.hasComponent<ComponentType::RENDER>(entityId))
       batchManager.submit(entityId);
   }
@@ -129,9 +132,7 @@ void Renderer::enableAlphaBlending(){
 void Renderer::renderSceneToBuffer(){
   sceneBuffer.bind();
   flush();
-  collectAndBatch(sceneManager.get(currentScene));
   renderBatches();
-  batchManager.cleanBatches();
 }
 
 void Renderer::renderBufferToScreen(){

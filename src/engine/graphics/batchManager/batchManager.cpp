@@ -1,6 +1,46 @@
 #include "./batchManager.hpp"
+#include "engine/entityManager/ComponentManager/componentManager.hpp"
 #include "engine/entityManager/component/components.hpp"
+#include "engine/entityManager/entityManager.hpp"
+#include "engine/eventManager/eventManager.hpp"
 #include <algorithm>
+
+
+
+BatchManager::BatchManager(EntityManager& eManager):entityManager(eManager) {
+  EventManager::subscribe<EntityCreatedEvent>([this](EntityCreatedEvent e){submit(e.id);});
+  EventManager::subscribe<EntityDestroyedEvent>([this](EntityDestroyedEvent e){remove(e.id);});
+  EventManager::subscribe<ComponentSetEvent<TransformComponent>>([this](ComponentSetEvent<TransformComponent> e){
+      if(!entityManager.componentManager.hasComponent<ComponentType::RENDER,ComponentType::TRANSFORM>(e.entity))return;
+      auto renderComp = entityManager.componentManager.getComponent<ComponentType::RENDER>(e.entity);
+      auto transformComp = entityManager.componentManager.getComponent<ComponentType::TRANSFORM>(e.entity);
+      BatchKey key = {.mesh = renderComp.mesh,
+      .material = renderComp.material,
+      .zIndex=(int)transformComp.position.z};
+      if (!batches.contains(key))return;
+      batches[key].replaceModel(e.entity, entityManager.makeModelMatrix(e.entity));
+  });
+  EventManager::subscribe<ComponentSetEvent<RenderComponent>>([this](ComponentSetEvent<RenderComponent> e){
+      if(!entityManager.componentManager.hasComponent<ComponentType::RENDER,ComponentType::TRANSFORM>(e.entity))return;
+      auto renderComp = entityManager.componentManager.getComponent<ComponentType::RENDER>(e.entity);
+      auto transformComp = entityManager.componentManager.getComponent<ComponentType::TRANSFORM>(e.entity);
+      BatchKey key = {.mesh = renderComp.mesh,
+      .material = renderComp.material,
+      .zIndex=(int)transformComp.position.z};
+      if (!batches.contains(key))return;
+      batches[key].replaceColor(e.entity, entityManager.colorToVec4(e.entity));
+  });
+  EventManager::subscribe<ComponentSetEvent<UvRectComponent>>([this](ComponentSetEvent<UvRectComponent> e){
+      auto renderComp = entityManager.componentManager.getComponent<ComponentType::RENDER>(e.entity);
+      auto transformComp = entityManager.componentManager.getComponent<ComponentType::TRANSFORM>(e.entity);
+      BatchKey key = {.mesh = renderComp.mesh,
+      .material = renderComp.material,
+      .zIndex=(int)transformComp.position.z};
+      if (!batches.contains(key))return;
+      batches[key].replaceUv(e.entity, {e.comp.uvMin,e.comp.uvMax});
+  });
+};
+
 
 BatchKey BatchManager::submit(EntityId entity) {
   auto renderComp = entityManager.componentManager.getComponent<ComponentType::RENDER>(entity);
@@ -20,6 +60,20 @@ BatchKey BatchManager::submit(EntityId entity) {
   }
   LOG_DEBUG("submitting entity:{} into batch with: mesh:{} material:{},zIndex:{}",entity,key.mesh,key.material,(int)transformComp.position.z);
   return key;
+}
+
+
+void BatchManager::remove(EntityId entity){
+  auto renderComp = entityManager.componentManager.getComponent<ComponentType::RENDER>(entity);
+  auto transformComp = entityManager.componentManager.getComponent<ComponentType::TRANSFORM>(entity);
+  BatchKey key = {.mesh = renderComp.mesh,
+                  .material = renderComp.material,
+                  .zIndex=(int)transformComp.position.z};
+  if (!batches.contains(key)){
+    LOG_WARN("trying to remove an entity from batch that doesnt exist in batches entityID : {}",entity);
+    return;
+  }
+  batches[key].remove(entity);
 }
 
 

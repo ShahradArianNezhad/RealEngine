@@ -44,8 +44,12 @@ public:
   std::vector<EntityId> getEntities() { return entities; };
   void submit(EntityId entity) { entities.push_back(entity); }
   void addTransform(mat4 transform){transformInstances.push_back(transform);};
+  void replaceModel(EntityId id,mat4 transform);
   void addColor(vec4 color){colorInstances.push_back(color);};
+  void replaceColor(EntityId id,vec4 color);
   void addUv(vec4 uv){uvInstances.push_back(uv);};
+  void replaceUv(EntityId id,vec4 uv);
+  void remove(EntityId id);
   std::vector<mat4>& getModelInstanceData(){return transformInstances;};
   std::vector<vec4>& getColorInstanceData(){return colorInstances;};
   std::vector<vec4>& getUvInstanceData(){return uvInstances;};

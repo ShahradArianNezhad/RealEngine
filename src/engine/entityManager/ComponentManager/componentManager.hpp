@@ -1,10 +1,17 @@
 #pragma once
 #include "engine/entityManager/component/components.hpp"
 #include "./componentAllocator/componentAllocator.hpp"
+#include "engine/eventManager/eventManager.hpp"
 #include <tuple>
 
 
 using ComponentId = uint32_t;
+
+template<typename T>
+struct ComponentSetEvent{
+  EntityId entity;
+  T comp;
+};
 
 class ComponentManager {
 private:
@@ -21,7 +28,7 @@ private:
 public:
   template<ComponentType T>
     EnumToType<T>::type getComponent(EntityId id){
-      auto allocator = std::get<ComponentAllocator<typename EnumToType<T>::type>>(allocators);
+      auto& allocator = std::get<ComponentAllocator<typename EnumToType<T>::type>>(allocators);
       return allocator.getComponent(id);
     }
 
@@ -29,6 +36,7 @@ public:
     void setComponent(EntityId id,typename EnumToType<T>::type comp){
       auto& allocator = std::get<ComponentAllocator<typename EnumToType<T>::type>>(allocators);
       allocator.setComponent(id,comp);
+      EventManager::emit(ComponentSetEvent<typename EnumToType<T>::type>{id,comp});
       LOG_DEBUG("set component:{} on entity: {}",comp,id);
     }
 

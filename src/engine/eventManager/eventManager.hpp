@@ -4,11 +4,6 @@
 #include "utils/objectPool/objectPool.hpp"
 #include <map>
 
-struct EntityDestroyedEvent{
-  EntityId id;
-};
-
-
 using subscriptionId = uint32_t;
 
 class EventManager{

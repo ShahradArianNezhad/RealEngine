@@ -12,6 +12,7 @@ private:
   std::vector<size_t> indexToEntity;
 
 public:
+
   T getComponent(EntityId id){
     if(entityToIndex.contains(id))return components[entityToIndex[id]];
     LOG_WARN("getComponent:{} called on entity:{} which doesnt have that component",typeid(T).name(),id);

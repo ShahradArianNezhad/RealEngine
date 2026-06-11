@@ -4,6 +4,7 @@
 #include "./game/game.hpp"
 #include "engine/entityManager/component/components.hpp"
 #include "engine/eventManager/eventManager.hpp"
+#include "platform/window/GLFWwindow.hpp"
 
 
 struct MoveEvent{
@@ -16,40 +17,20 @@ public:
   int counter=0;
   bool face=0;
   EntityId camera=engine.entityManager.makeCamera();
-  EntityId c2 =engine.makeRect({0,0,0},{150,150});
-  EntityId c4 =engine.makeCircle({200,0,0},100);
-  EntityId c3 =engine.makeRect({-300,0,0},{100,100});
+  EntityId c1 = engine.makeSprite({0,0,0},"./assets/Characters(100x100)/Orc/Orc/Orc-Attack01.png",{0,0},{1.0/6,1});
 
   void init() override {
-    auto rect = CircleColliderComponent{150,{0,0}};
-    engine.entityManager.componentManager.setComponent<ComponentType::CIRCLECOLLIDER>(c2,rect);
-    rect = CircleColliderComponent{100,{0,0}};
-    engine.entityManager.componentManager.setComponent<ComponentType::CIRCLECOLLIDER>(c3,rect);
-    auto transform = engine.entityManager.componentManager.getComponent<ComponentType::TRANSFORM>(c2);
-    engine.entityManager.componentManager.setComponent<ComponentType::TRANSFORM>(c2, transform);
-    auto cam = engine.entityManager.componentManager.getComponent<ComponentType::CAMERA2D>(camera);
-    engine.entityManager.componentManager.setComponent<ComponentType::CAMERA2D>(camera,cam);
     engine.useCamera(camera, engine.getCurrentScene());
-    engine.setTargetFPS(60);
-
-    EventManager::subscribe<MoveEvent>([this](const MoveEvent& e){
-    auto transform = engine.entityManager.componentManager.getComponent<ComponentType::TRANSFORM>(c2);
-    transform.position.x+=e.dx;
-    transform.position.y+=e.dy;
-    engine.entityManager.componentManager.setComponent<ComponentType::TRANSFORM>(c2, transform);
-        });
-
   }
 
 
   void update(double) override {
-    if(engine.inputHandler.checkKeyPress(Key::D))EventManager::emit(MoveEvent{10,0});
-    if(engine.inputHandler.checkKeyPress(Key::A))EventManager::emit(MoveEvent{-10,0});
-    if(engine.inputHandler.checkKeyPress(Key::W))EventManager::emit(MoveEvent{0,-10});
-    if(engine.inputHandler.checkKeyPress(Key::S))EventManager::emit(MoveEvent{0,10});
-
-
-
+    auto trans = engine.entityManager.componentManager.getComponent<ComponentType::TRANSFORM>(c1);
+    if(engine.inputHandler.checkKeyPress(Key::D)) trans.position.x+=10;
+    if(engine.inputHandler.checkKeyPress(Key::A)) trans.position.x-=10;
+    if(engine.inputHandler.checkKeyPress(Key::W)) trans.position.y-=10;
+    if(engine.inputHandler.checkKeyPress(Key::S)) trans.position.y+=10;
+    engine.entityManager.componentManager.setComponent<ComponentType::TRANSFORM>(c1, trans);
   };
 };
 

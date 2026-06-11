@@ -8,8 +8,9 @@ private:
   EntityManager& entityManager;
 
 public:
-  BatchManager(EntityManager& eManager):entityManager(eManager) {};
+  BatchManager(EntityManager& eManager);
   BatchKey submit(EntityId entity);
+  void remove(EntityId entity);
   std::unordered_map<BatchKey, Batch> &getBatches() { return batches; }
   std::vector<std::pair<BatchKey,Batch>> getBatches2();
   void cleanBatches() { batches.clear(); }

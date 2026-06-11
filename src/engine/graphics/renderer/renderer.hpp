@@ -60,7 +60,7 @@ public:
   static void initGLAD();
 
   void useScene(SceneId scene) { currentScene = scene; };
-  void addEntity(EntityId e){sceneManager.get(currentScene)->addEntity(e);}
+  void addEntity(EntityId e);
   SceneId getCurrentScene(){return currentScene;}
   void flush();
   float ambient=0.9;

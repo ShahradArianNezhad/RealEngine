@@ -1,4 +1,5 @@
 #pragma once
+#include "engine/entityManager/entityManager.hpp"
 #include "engine/eventManager/eventManager.hpp"
 #include "utils/logger/logger.hpp"
 #include <cstdint>
@@ -27,6 +28,7 @@ public:
   std::vector<EntityId> &collectEntities() {return entities;}
 
   void addEntity(EntityId entity) {
+    EventManager::emit(EntityCreatedEvent{entity});
     LOG_DEBUG("entity:{} added to scene:{}",entity,id);
     entities.push_back(entity);
 

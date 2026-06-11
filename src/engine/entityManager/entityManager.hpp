@@ -7,6 +7,13 @@
 #include <cstdint>
 #include <vector>
 
+struct EntityDestroyedEvent{
+  EntityId id;
+};
+
+struct EntityCreatedEvent{
+  EntityId id;
+};
 
 using EntityId = uint32_t;
 
